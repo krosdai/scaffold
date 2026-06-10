@@ -9,6 +9,11 @@ pnpm-lock.yaml
 __pycache__
 uv.lock
 
+# Tool caches
+.mypy_cache
+.pytest_cache
+.ruff_cache
+
 # Build outputs
 dist
 build
