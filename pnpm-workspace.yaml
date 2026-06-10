@@ -1,2 +1,5 @@
+minimumReleaseAgeExclude:
+  - prettier@3.8.4
+
 onlyBuiltDependencies:
   - esbuild
