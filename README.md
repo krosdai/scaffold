@@ -12,7 +12,8 @@ checks, CI, and editor/devcontainer hints.
 Shared:
 
 - mise config for unified tool management (Node.js, pnpm, uv, AutoCorrect)
-- Prettier formatting for Markdown, JSON, YAML, and CSS
+- Prettier formatting for docs and config file types (Markdown, JSON, YAML, HTML,
+  CSS, Vue, GraphQL, and more — see the globs in `package.json`)
 - AutoCorrect CJK copywriting cleanup
 - Husky pre-commit and pre-push hooks with lint-staged
 - GitHub Actions lint and AI code-review workflows
