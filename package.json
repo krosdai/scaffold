@@ -13,7 +13,7 @@
     "lint:text": "autocorrect --lint .",
     "lint:staged": "lint-staged --concurrent false",
     "lint:fix": "oxlint --fix && pnpm -r run --if-present lint:fix && uv run --locked ruff check --fix . && pnpm run lint:fix:rust && pnpm run format",
-    "lint:fix:rust": "if [ -n \"$(find apps packages -name Cargo.toml -type f 2>/dev/null)\" ]; then cargo clippy --fix --allow-dirty --allow-staged --workspace --all-targets && cargo clippy --workspace --all-targets -- -D warnings; fi",
+    "lint:fix:rust": "if [ -n \"$(find apps packages -name Cargo.toml -type f 2>/dev/null)\" ]; then cargo clippy --fix --allow-dirty --allow-staged --workspace --all-targets && cargo clippy --workspace --all-targets --locked -- -D warnings; fi",
     "prepare": "husky"
   },
   "devDependencies": {
