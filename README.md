@@ -1,17 +1,18 @@
 # Monorepo Scaffold
 
-A minimal bootstrap scaffold for TypeScript + Python monorepos.
+A minimal bootstrap scaffold for TypeScript + Python + Rust monorepos.
 
 This repository is intentionally small. It provides the shared project hygiene that most
 repositories need before application code exists: tool and package manager pinning, strict
-TypeScript defaults, a modern Python toolchain (uv + Ruff), formatting, linting, staged-file
-checks, CI, and editor/devcontainer hints.
+TypeScript defaults, a modern Python toolchain (uv + Ruff), a Rust toolchain (Cargo +
+rustfmt + Clippy), formatting, linting, staged-file checks, CI, and editor/devcontainer
+hints.
 
 ## What Is Included
 
 Shared:
 
-- mise config for unified tool management (Node.js, pnpm, uv, AutoCorrect)
+- mise config for unified tool management (Node.js, pnpm, uv, AutoCorrect; Rust is opt-in)
 - Prettier formatting for docs and config file types (Markdown, JSON, YAML, HTML,
   CSS, Vue, GraphQL, and more — see the globs in `package.json`)
 - AutoCorrect CJK copywriting cleanup
@@ -34,6 +35,16 @@ Python:
 - Ruff linter + formatter configured in the root `pyproject.toml`
 - Python version pinned in `.python-version` (uv installs it automatically)
 
+Rust:
+
+- Cargo workspace under `apps/` and `packages/` with a single shared `Cargo.lock`
+- [rustfmt](https://rust-lang.github.io/rustfmt/) formatting (`rustfmt.toml`, edition 2024)
+- [Clippy](https://doc.rust-lang.org/clippy/) linting, run with `-D warnings` so any lint
+  fails `pnpm run lint`
+- Toolchain opt-in via mise: uncomment `rust` in `mise.toml` when you add your first crate
+  (it pins `rust = "1.93"` with the rustfmt + clippy components). Until then the Rust
+  lint/format steps are no-ops, so repos without Rust don't install the toolchain.
+
 ## What Is Not Included
 
 - No app framework
@@ -47,16 +58,18 @@ Add those only when a real project needs them.
 ## Layout
 
 ```
-apps/        # deployable applications (TypeScript or Python)
-packages/    # shared libraries (TypeScript or Python)
+apps/        # deployable applications (TypeScript, Python, or Rust)
+packages/    # shared libraries (TypeScript, Python, or Rust)
 ```
 
-TypeScript and Python members share the same two directories, and a member can even belong
-to both ecosystems. pnpm discovers members through the `apps/*` / `packages/*` globs in
-`pnpm-workspace.yaml`: a directory joins by having a `package.json`. Python members are
-instead listed explicitly in `[tool.uv.workspace]` in the root `pyproject.toml`, because uv
-requires every glob match to be a Python project — globs would break the moment a
-TypeScript-only package appears. `uv init` maintains that member list for you.
+TypeScript, Python, and Rust members share the same two directories, and a member can even
+belong to more than one ecosystem. pnpm discovers members through the `apps/*` / `packages/*`
+globs in `pnpm-workspace.yaml`: a directory joins by having a `package.json`. Python and Rust
+members are instead listed explicitly — Python in `[tool.uv.workspace]` in the root
+`pyproject.toml`, Rust in `[workspace] members` in the root `Cargo.toml`. Both uv and Cargo
+require every member-glob match to be a project of their own kind, so a glob like `apps/*`
+would break the moment a member of another ecosystem appears; explicit lists avoid that.
+`uv init` and `cargo new` maintain their respective member lists for you.
 
 ## Quick Start
 
@@ -79,15 +92,19 @@ pnpm install
 uv sync --locked
 ```
 
+Rust is opt-in (see [Adding Workspace Members](#adding-workspace-members)). Once a toolchain
+is available, Cargo resolves Rust dependencies on the first build — there is no separate
+install step.
+
 ## Commands
 
-Format files (Oxfmt + Prettier + Ruff + AutoCorrect):
+Format files (Oxfmt + Prettier + Ruff + rustfmt + AutoCorrect):
 
 ```sh
 pnpm run format
 ```
 
-Run all lint checks (Oxlint + Oxfmt + Prettier, Ruff, AutoCorrect):
+Run all lint checks (Oxlint + Oxfmt + Prettier, Ruff, rustfmt + Clippy, AutoCorrect):
 
 ```sh
 pnpm run lint
@@ -98,8 +115,12 @@ Run lint checks for one ecosystem:
 ```sh
 pnpm run lint:js
 pnpm run lint:py
+pnpm run lint:rust
 pnpm run lint:text
 ```
+
+The Rust steps are no-ops until the first crate exists, so `pnpm run lint` stays green on a
+fresh checkout before any Rust code is added.
 
 Run lint fixes and formatting:
 
@@ -131,19 +152,34 @@ uv init --package packages/my-tool && uv sync
 automatically; Ruff settings are inherited from the root, and all members share one
 lockfile and virtual environment.
 
+A Rust crate (first enable the opt-in toolchain by uncommenting the `rust` line in
+`mise.toml`, then `mise install`):
+
+```sh
+cargo new packages/my-crate        # use --lib for a library, default is a binary
+```
+
+`cargo new` appends the crate to `[workspace] members` in the root `Cargo.toml`
+automatically, and — because the root declares `[workspace.package]` — the generated
+`Cargo.toml` already inherits shared metadata via `edition.workspace = true` and
+`rust-version.workspace = true`. rustfmt and Clippy settings are inherited from the root too,
+and all members share one `Cargo.lock` and `target/` directory. Until the toolchain is
+enabled, the Rust lint/format steps stay no-ops and CI never installs Rust.
+
 ## Git Hooks
 
 - `pre-commit` runs lint-staged: Oxlint + Oxfmt on staged JS/TS, Ruff on staged Python,
-  Prettier on staged docs/config files, plus AutoCorrect on all staged files.
+  rustfmt on staged Rust, Prettier on staged docs/config files, plus AutoCorrect on all
+  staged files.
 - `pre-push` runs Git LFS, so `git-lfs` must be installed.
 
-The hooks need pnpm, uv, and AutoCorrect on PATH. If a GUI Git client doesn't load your
+The hooks need pnpm, uv, rustfmt, and AutoCorrect on PATH. If a GUI Git client doesn't load your
 shell profile, provide them via husky's `~/.config/husky/init.sh`, e.g.
 `eval "$(mise activate bash --shims)"`.
 
 ## Usage
 
-Start from this scaffold when you want a clean TypeScript + Python repository foundation
-without choosing an application framework up front. Keep the base small, add
+Start from this scaffold when you want a clean TypeScript + Python + Rust repository
+foundation without choosing an application framework up front. Keep the base small, add
 project-specific tools deliberately, and prefer extending the existing config over
 replacing it.
