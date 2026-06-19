@@ -6,6 +6,11 @@
 node = "24"
 pnpm = "11"
 uv = "0.11"
+# Rust is opt-in so repos without Rust crates don't pay the toolchain install on
+# every `mise install` / CI run. Uncomment (then `mise install`) when you add your
+# first crate — the lint/format Rust steps stay no-ops until then. `profile =
+# "default"` guarantees the rustfmt + clippy components that lint and CI rely on.
+# rust = { version = "1.93", profile = "default" }
 
 # AutoCorrect for CJK copywriting, installed from GitHub releases
 # (the npm package lacks linux-arm64 binaries, so it is managed here instead)
@@ -14,7 +19,7 @@ uv = "0.11"
 [tasks]
 # Install all tools, JS dependencies, and Python dependencies
 setup = ["mise install", "pnpm install", "uv sync --locked"]
-# Run all lint checks (TypeScript, Python, copywriting)
+# Run all lint checks (TypeScript, Python, Rust, copywriting)
 lint = ["pnpm run lint"]
 # Run all formatters
 format = ["pnpm run format"]

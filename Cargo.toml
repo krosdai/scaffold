@@ -1,0 +1,17 @@
+# The repository root is a Cargo workspace root, not a publishable crate.
+[workspace]
+resolver = "3"
+
+# Rust workspace members are listed explicitly (not via globs) so that
+# TypeScript-only or Python-only directories under apps/ and packages/ don't
+# break Cargo. Like uv — and unlike pnpm — Cargo errors when a member glob such
+# as `apps/*` matches a directory that has no Cargo.toml, so globs would fail the
+# moment a non-Rust package appears. `cargo new apps/<name>` / `cargo new
+# packages/<name>` appends the new crate to this list automatically.
+members = []
+
+# Shared defaults inherited by member crates via `field.workspace = true`
+# in their own Cargo.toml (e.g. `edition.workspace = true`).
+[workspace.package]
+edition = "2024"
+rust-version = "1.93"

@@ -1,0 +1,5 @@
+# rustfmt configuration shared by every workspace crate.
+# `rustfmt` (and lint-staged) read `edition` from here, so it does not need to
+# be passed on the command line or duplicated per crate.
+edition = "2024"
+style_edition = "2024"
