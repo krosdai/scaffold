@@ -32,6 +32,7 @@
     "no-prototype-builtins": "error",
     "no-redeclare": "error",
     "no-regex-spaces": "error",
+    "no-undef": "error",
     "no-unexpected-multiline": "error",
     "no-useless-assignment": "error",
     "no-useless-constructor": "error",
@@ -160,6 +161,7 @@
         "no-redeclare": "off",
         "no-setter-return": "off",
         "no-this-before-super": "off",
+        "no-undef": "off",
         "no-unreachable": "off",
         "no-unsafe-negation": "off",
         "no-with": "off"
