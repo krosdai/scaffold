@@ -6,6 +6,7 @@
     "ms-playwright.playwright",
     "ms-python.python",
     "oxc.oxc-vscode",
+    "rust-lang.rust-analyzer",
     "tamasfe.even-better-toml",
     "unifiedjs.vscode-mdx"
   ],
