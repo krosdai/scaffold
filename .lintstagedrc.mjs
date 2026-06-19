@@ -6,6 +6,9 @@ export default {
   ],
   // Ruff for Python files
   "**/*.py": ["uv run --locked ruff check --fix", "uv run --locked ruff format"],
+  // rustfmt for Rust files (reads edition from rustfmt.toml; clippy is left to
+  // `pnpm run lint` / CI since it must compile the whole crate, not single files)
+  "**/*.rs": ["rustfmt"],
   // Prettier for docs and config file types
   "**/*.{md,mdx,markdown,json,jsonc,json5,yaml,yml,html,htm,css,scss,less,vue,graphql,gql,hbs,handlebars}":
     ["pnpm exec prettier --write --ignore-unknown"],

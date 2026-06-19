@@ -18,6 +18,7 @@ uv.lock
 dist
 build
 coverage
+target
 *.tsbuildinfo
 
 # Logs
