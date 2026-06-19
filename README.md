@@ -157,14 +157,16 @@ A Rust crate (first enable the opt-in toolchain by uncommenting the `rust` line 
 
 ```sh
 cargo new packages/my-crate        # use --lib for a library, default is a binary
+cargo generate-lockfile            # create Cargo.lock so the locked lint passes; commit it
 ```
 
 `cargo new` appends the crate to `[workspace] members` in the root `Cargo.toml`
 automatically, and — because the root declares `[workspace.package]` — the generated
 `Cargo.toml` already inherits shared metadata via `edition.workspace = true` and
 `rust-version.workspace = true`. rustfmt and Clippy settings are inherited from the root too,
-and all members share one `Cargo.lock` and `target/` directory. Until the toolchain is
-enabled, the Rust lint/format steps stay no-ops and CI never installs Rust.
+and all members share one `Cargo.lock` and `target/` directory. `lint:rust` runs Clippy with
+`--locked`, so commit `Cargo.lock` (CI fails if it is missing or stale). Until the toolchain
+is enabled, the Rust lint/format steps stay no-ops and CI never installs Rust.
 
 ## Git Hooks
 
@@ -173,9 +175,9 @@ enabled, the Rust lint/format steps stay no-ops and CI never installs Rust.
   staged files.
 - `pre-push` runs Git LFS, so `git-lfs` must be installed.
 
-The hooks need pnpm, uv, rustfmt, and AutoCorrect on PATH. If a GUI Git client doesn't load your
-shell profile, provide them via husky's `~/.config/husky/init.sh`, e.g.
-`eval "$(mise activate bash --shims)"`.
+The hooks need pnpm, uv, and AutoCorrect on PATH (plus rustfmt only when committing Rust).
+If a GUI Git client doesn't load your shell profile, provide them via husky's
+`~/.config/husky/init.sh`, e.g. `eval "$(mise activate bash --shims)"`.
 
 ## Usage
 

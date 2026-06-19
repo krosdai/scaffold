@@ -1,5 +1,6 @@
 # rustfmt configuration shared by every workspace crate.
-# `rustfmt` (and lint-staged) read `edition` from here, so it does not need to
-# be passed on the command line or duplicated per crate.
+# rustfmt reads `edition` from here whether it is run directly (as lint-staged
+# does on staged .rs files) or via `cargo fmt`, so the edition is not passed on
+# the command line or duplicated per crate.
 edition = "2024"
 style_edition = "2024"
