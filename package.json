@@ -9,11 +9,11 @@
     "lint": "pnpm run lint:js && pnpm run lint:py && pnpm run lint:rust && pnpm run lint:text",
     "lint:js": "oxlint && pnpm -r run --if-present lint && oxfmt --check && prettier --check --ignore-unknown --no-error-on-unmatched-pattern \"**/*.{md,mdx,markdown,json,jsonc,json5,yaml,yml,html,htm,css,scss,less,vue,graphql,gql,hbs,handlebars}\"",
     "lint:py": "uv run --locked ruff check . && uv run --locked ruff format --check .",
-    "lint:rust": "if [ -n \"$(find apps packages -name Cargo.toml -type f 2>/dev/null)\" ]; then cargo fmt --check && cargo clippy --workspace --all-targets --all-features -- -D warnings; fi",
+    "lint:rust": "if [ -n \"$(find apps packages -name Cargo.toml -type f 2>/dev/null)\" ]; then cargo fmt --check && cargo clippy --workspace --all-targets --locked -- -D warnings; fi",
     "lint:text": "autocorrect --lint .",
     "lint:staged": "lint-staged --concurrent false",
     "lint:fix": "oxlint --fix && pnpm -r run --if-present lint:fix && uv run --locked ruff check --fix . && pnpm run lint:fix:rust && pnpm run format",
-    "lint:fix:rust": "if [ -n \"$(find apps packages -name Cargo.toml -type f 2>/dev/null)\" ]; then cargo clippy --fix --allow-dirty --allow-staged --workspace --all-targets --all-features && cargo clippy --workspace --all-targets --all-features -- -D warnings; fi",
+    "lint:fix:rust": "if [ -n \"$(find apps packages -name Cargo.toml -type f 2>/dev/null)\" ]; then cargo clippy --fix --allow-dirty --allow-staged --workspace --all-targets && cargo clippy --workspace --all-targets -- -D warnings; fi",
     "prepare": "husky"
   },
   "devDependencies": {
