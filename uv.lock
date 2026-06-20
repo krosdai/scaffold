@@ -3,7 +3,7 @@ revision = 3
 requires-python = ">=3.14"
 
 [[package]]
-name = "daihaus-scaffold"
+name = "krosdai-scaffold"
 version = "0.0.0"
 source = { virtual = "." }
 

@@ -1,5 +1,5 @@
 [project]
-name = "daihaus-scaffold"
+name = "krosdai-scaffold"
 version = "0.0.0"
 description = "TypeScript + Python monorepo scaffold"
 readme = "README.md"
