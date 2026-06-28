@@ -23,3 +23,6 @@ setup = ["mise install", "pnpm install", "uv sync --locked"]
 lint = ["pnpm run lint"]
 # Run all formatters
 format = ["pnpm run format"]
+# Run AutoCorrect through the mise-managed binary
+"autocorrect:lint" = ["autocorrect --lint ."]
+"autocorrect:fix" = ["autocorrect --fix ."]
