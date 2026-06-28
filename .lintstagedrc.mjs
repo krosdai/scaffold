@@ -12,6 +12,6 @@ export default {
   // Prettier for docs and config file types
   "**/*.{md,mdx,markdown,json,jsonc,json5,yaml,yml,html,htm,css,scss,less,vue,graphql,gql,hbs,handlebars}":
     ["pnpm exec prettier --write --ignore-unknown"],
-  // Autocorrect for all files (mise-managed, on PATH)
-  "**/*": ["autocorrect --fix"],
+  // Autocorrect for all files (mise-managed)
+  "**/*": ["mise x -- autocorrect --fix"],
 };

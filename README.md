@@ -80,14 +80,15 @@ mise run setup
 ```
 
 [Activate mise](https://mise.jdx.dev/getting-started.html) in your shell so the managed
-tools are on PATH, or prefix commands with `mise exec --`; `mise run lint` and
-`mise run format` also work without activation.
+tools are on PATH. AutoCorrect is managed through mise, and package scripts call
+`mise run` / `mise x` for those checks.
 
-Or manually, with Node.js, pnpm, uv, and
-[AutoCorrect](https://github.com/huacnlee/autocorrect) already installed
-(e.g. `brew install node pnpm uv autocorrect`):
+Package scripts require `mise` because AutoCorrect runs through the repo-managed
+toolchain. If you manage Node.js, pnpm, or uv yourself, still run `mise install`
+so the configured tools are available before running package scripts:
 
 ```sh
+mise install
 pnpm install
 uv sync --locked
 ```
