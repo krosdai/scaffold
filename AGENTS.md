@@ -20,7 +20,7 @@ Layout:
 
 - `apps/*`, `packages/*` — workspace members (none yet; this is a clean scaffold).
 - Root config files — the shared toolchain. Prefer **extending** these over replacing them.
-- `.github/workflows/` — CI: `lint.yml` (all ecosystems) and `code-review.yml` (AI review).
+- `.github/workflows/` — CI: `lint.yml` (all ecosystems).
 - `.agents/`, `.cursor/` — bootstrap scripts for hosted agent environments (Amp orb lifecycle,
   Cursor Cloud Agent). They mirror `mise run setup`; local development does not run them.
 
