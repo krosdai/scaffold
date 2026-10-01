@@ -4,8 +4,8 @@
 
 [tools]
 node = "24"
-pnpm = "11.27.0"
-uv = "0.11"
+pnpm = "12.8.1"
+uv = "0.12"
 # Rust is opt-in so repos without Rust crates don't pay the toolchain install on
 # every `mise install` / CI run. Uncomment (then `mise install`) when you add your
 # first crate — the lint/format Rust steps stay no-ops until then. `profile =
