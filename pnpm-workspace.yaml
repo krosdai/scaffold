@@ -7,3 +7,8 @@ minimumReleaseAgeExclude:
 
 allowBuilds:
   esbuild: true
+
+# Keep pnpm-lock.yaml single-document: GitHub's dependency graph reads only the
+# first YAML document, so pnpm 12's self-pinning env document would hide every
+# project dependency (dependabot/dependabot-core#15904). mise pins pnpm instead.
+pmOnFail: ignore
