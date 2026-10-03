@@ -18,7 +18,7 @@ Shared:
 - Husky pre-commit and pre-push hooks with lint-staged
 - GitHub Actions lint workflow
 - Basic `.env.example` and `.gitignore` files
-- `AGENTS.md` for AI coding agents (`CLAUDE.md` references it)
+- `AGENTS.md` for AI coding agents
 
 TypeScript:
 
