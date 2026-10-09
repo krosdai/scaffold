@@ -16,7 +16,7 @@ Shared:
   CSS, Vue, GraphQL, and more — see the globs in `package.json`)
 - AutoCorrect CJK copywriting cleanup
 - Husky pre-commit and pre-push hooks with lint-staged
-- GitHub Actions lint workflow
+- GitHub Actions lint and AI code-review workflows
 - Basic `.env.example` and `.gitignore` files
 - `AGENTS.md` for AI coding agents
 
